@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { 
   X, 
-  Sparkles, 
   Clock, 
   ArrowUpRight
 } from 'lucide-react';
-
 import confetti from 'canvas-confetti';
+
 import { personalInfo } from '../data/portfolioData';
 
 interface AutoLeadModalProps {
@@ -18,7 +17,6 @@ export const AutoLeadModal: React.FC<AutoLeadModalProps> = ({ delayMs = 5000 }) 
   const [name, setName] = useState('');
   const [contact, setContact] = useState('');
   const [projectType, setProjectType] = useState('Enterprise SaaS');
-  const [budget, setBudget] = useState('$1,500 - $3,500');
   const [message, setMessage] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submitMethod, setSubmitMethod] = useState<'whatsapp' | 'email'>('whatsapp');
@@ -31,8 +29,8 @@ export const AutoLeadModal: React.FC<AutoLeadModalProps> = ({ delayMs = 5000 }) 
       setIsOpen(true);
       try {
         confetti({
-          particleCount: 40,
-          spread: 60,
+          particleCount: 35,
+          spread: 50,
           origin: { y: 0.6 },
           colors: ['#06b6d4', '#3b82f6', '#8b5cf6', '#10b981']
         });
@@ -51,27 +49,22 @@ export const AutoLeadModal: React.FC<AutoLeadModalProps> = ({ delayMs = 5000 }) 
     e.preventDefault();
     try {
       confetti({
-        particleCount: 80,
-        spread: 80,
+        particleCount: 60,
+        spread: 60,
         origin: { y: 0.5 },
-        colors: ['#10b981', '#06b6d4', '#3b82f6', '#f59e0b']
+        colors: ['#10b981', '#06b6d4', '#3b82f6']
       });
     } catch { /* fallback */ }
 
     if (submitMethod === 'whatsapp') {
       const waText = encodeURIComponent(
-        `Hello Saifuddin! I visited your portfolio and would like to discuss a project:
-- Name: ${name || 'Potential Client'}
-- Contact: ${contact || 'N/A'}
-- Project Type: ${projectType}
-- Estimated Budget: ${budget}
-- Details: ${message || 'Looking forward to your availability for a quick kickoff.'}`
+        `Hello Saifuddin! Project Inquiry:\n- Name: ${name || 'Client'}\n- Contact: ${contact || 'N/A'}\n- Type: ${projectType}\n- Scope: ${message || 'Looking to discuss a new project.'}`
       );
       window.open(`https://wa.me/${personalInfo.rawPhone}?text=${waText}`, '_blank');
     } else {
       const subject = encodeURIComponent(`Project Inquiry: ${projectType} - ${name || 'Client'}`);
       const body = encodeURIComponent(
-        `Hi Saifuddin,\n\nI would like to hire you for a project:\n- Name: ${name}\n- Contact: ${contact}\n- Project Type: ${projectType}\n- Budget: ${budget}\n\nProject Notes:\n${message || 'Please let me know your earliest availability.'}\n\nBest regards,\n${name || 'Client'}`
+        `Hi Saifuddin,\n\nI would like to discuss a project:\n- Name: ${name}\n- Contact: ${contact}\n- Project Type: ${projectType}\n- Scope: ${message}\n\nBest regards,\n${name || 'Client'}`
       );
       window.location.href = `mailto:${personalInfo.email}?subject=${subject}&body=${body}`;
     }
@@ -79,104 +72,94 @@ export const AutoLeadModal: React.FC<AutoLeadModalProps> = ({ delayMs = 5000 }) 
     setIsSubmitted(true);
     setTimeout(() => {
       handleClose();
-    }, 2500);
+    }, 2000);
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 select-none animate-fade-in">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 select-none animate-fade-in">
       
       {/* Backdrop */}
       <div 
         onClick={handleClose}
-        className="absolute inset-0 bg-slate-950/70 backdrop-blur-md transition-opacity duration-300"
+        className="absolute inset-0 bg-slate-950/75 backdrop-blur-sm transition-opacity duration-300"
       />
 
-      {/* Modal Container */}
-      <div className="relative z-10 w-full max-w-lg rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-white/[0.12] shadow-2xl overflow-hidden animate-scale-in">
+      {/* Compact Modal Container (Mobile Optimized) */}
+      <div className="relative z-10 w-full max-w-md rounded-2xl sm:rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-white/[0.12] shadow-2xl overflow-hidden max-h-[92vh] flex flex-col animate-scale-in">
         
-        {/* Top Header Bar */}
-        <div className="px-6 py-4 border-b border-slate-200/80 dark:border-white/[0.08] flex items-center justify-between bg-slate-50/80 dark:bg-white/[0.03]">
+        {/* Header Bar */}
+        <div className="px-4 sm:px-5 py-3 border-b border-slate-200/80 dark:border-white/[0.08] flex items-center justify-between bg-slate-50/90 dark:bg-white/[0.03]">
           <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="text-xs font-mono font-bold text-slate-700 dark:text-slate-200">
-              Available for New Projects
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="text-[11px] sm:text-xs font-mono font-bold text-slate-700 dark:text-slate-200">
+              🟢 Available for New Projects
             </span>
           </div>
           <button
             onClick={handleClose}
-            className="w-8 h-8 rounded-full bg-slate-200/60 dark:bg-white/[0.08] hover:bg-slate-300 dark:hover:bg-white/[0.15] flex items-center justify-center text-slate-700 dark:text-slate-300 transition-colors cursor-pointer"
-            aria-label="Close form"
+            className="w-7 h-7 rounded-full bg-slate-200/70 dark:bg-white/[0.08] hover:bg-slate-300 dark:hover:bg-white/[0.15] flex items-center justify-center text-slate-700 dark:text-slate-300 transition-colors cursor-pointer"
+            aria-label="Close modal"
           >
-            <X className="w-4 h-4" />
+            <X className="w-3.5 h-3.5" />
           </button>
         </div>
 
-        {/* Modal Body */}
-        <div className="p-6 sm:p-8 space-y-5">
+        {/* Scrollable Form Body */}
+        <div className="p-4 sm:p-5 overflow-y-auto space-y-3.5 text-left">
           
-          <div className="space-y-1.5 text-left">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-cyan-400 text-[11px] font-mono font-bold uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Direct Project Inquiry</span>
-            </div>
-            <h3 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
-              Let's Build Your <span className="text-gradient">Next Product</span> 🚀
+          <div className="space-y-0.5">
+            <h3 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+              Start a Project with <span className="text-gradient">Saifuddin</span> 🚀
             </h3>
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-normal">
-              Tell me about your requirements, and I'll get back to you with architectural guidance and a sprint timeline within 2 hours.
+            <p className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-normal">
+              Direct response within &lt; 2 hours with project scope & estimates.
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4 text-left">
+          <form onSubmit={handleSubmit} className="space-y-2.5">
             
             {/* Input Row: Name & Contact */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div className="space-y-1">
-                <label className="text-[11px] font-mono font-bold text-slate-400 uppercase">Your Name</label>
-                <input
-                  type="text"
-                  required
-                  placeholder="Jane Doe"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-100 dark:bg-white/[0.05] border border-slate-200/80 dark:border-white/[0.08] text-xs font-bold text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-slate-400"
-                />
-              </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <input
+                type="text"
+                required
+                placeholder="Your Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="w-full px-3 py-2 rounded-xl bg-slate-100 dark:bg-white/[0.05] border border-slate-200/80 dark:border-white/[0.08] text-xs font-bold text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-slate-400"
+              />
 
-              <div className="space-y-1">
-                <label className="text-[11px] font-mono font-bold text-slate-400 uppercase">Email / WhatsApp</label>
-                <input
-                  type="text"
-                  required
-                  placeholder="jane@company.com"
-                  value={contact}
-                  onChange={(e) => setContact(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-100 dark:bg-white/[0.05] border border-slate-200/80 dark:border-white/[0.08] text-xs font-bold text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-slate-400"
-                />
-              </div>
+              <input
+                type="text"
+                required
+                placeholder="Email or WhatsApp"
+                value={contact}
+                onChange={(e) => setContact(e.target.value)}
+                className="w-full px-3 py-2 rounded-xl bg-slate-100 dark:bg-white/[0.05] border border-slate-200/80 dark:border-white/[0.08] text-xs font-bold text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-slate-400"
+              />
             </div>
 
-            {/* Project Scope Selector */}
+            {/* Compact Project Scope Selector */}
             <div className="space-y-1">
-              <label className="text-[11px] font-mono font-bold text-slate-400 uppercase">Project Type</label>
-              <div className="flex flex-wrap gap-1.5">
+              <label className="text-[10px] font-mono font-bold text-slate-400 uppercase">Project Category</label>
+              <div className="flex flex-wrap gap-1">
                 {[
                   'Enterprise SaaS',
                   'CRM & Portal',
                   'E-Commerce',
-                  'Web App & SEO',
-                  'Hire Full-Time'
+                  'Web App',
+                  'Full-Time Hire'
                 ].map((type) => (
                   <button
                     key={type}
                     type="button"
                     onClick={() => setProjectType(type)}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                    className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all cursor-pointer ${
                       projectType === type
-                        ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-md'
-                        : 'bg-slate-100 dark:bg-white/[0.05] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                        ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-sm'
+                        : 'bg-slate-100 dark:bg-white/[0.05] text-slate-600 dark:text-slate-400 hover:text-slate-900'
                     }`}
                   >
                     {type}
@@ -185,79 +168,51 @@ export const AutoLeadModal: React.FC<AutoLeadModalProps> = ({ delayMs = 5000 }) 
               </div>
             </div>
 
-            {/* Budget Selector */}
+            {/* Short Requirements Note */}
             <div className="space-y-1">
-              <label className="text-[11px] font-mono font-bold text-slate-400 uppercase">Estimated Budget</label>
-              <div className="flex flex-wrap gap-1.5">
-                {[
-                  '< $1,000',
-                  '$1,000 - $3,000',
-                  '$3,000 - $5,000+',
-                  'Flexible / Discussion'
-                ].map((b) => (
-                  <button
-                    key={b}
-                    type="button"
-                    onClick={() => setBudget(b)}
-                    className={`px-3 py-1 rounded-full text-[11px] font-mono font-bold transition-all cursor-pointer ${
-                      budget === b
-                        ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-md'
-                        : 'bg-slate-100 dark:bg-white/[0.05] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-                    }`}
-                  >
-                    {b}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-
-            {/* Message Details */}
-            <div className="space-y-1">
-              <label className="text-[11px] font-mono font-bold text-slate-400 uppercase">Brief Requirements</label>
-              <textarea
-                rows={2}
+              <input
+                type="text"
                 required
-                placeholder="Give a short overview of your project, tech stack, or deadline..."
+                placeholder="Short requirements, timeline, or tech stack..."
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-100 dark:bg-white/[0.05] border border-slate-200/80 dark:border-white/[0.08] text-xs font-bold text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-slate-400 resize-none"
+                className="w-full px-3 py-2 rounded-xl bg-slate-100 dark:bg-white/[0.05] border border-slate-200/80 dark:border-white/[0.08] text-xs font-bold text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-slate-400"
               />
             </div>
 
-            {/* Dispatch Buttons */}
-            <div className="pt-2 flex flex-col sm:flex-row gap-2.5">
+            {/* Quick Dispatch Buttons */}
+            <div className="pt-1 flex gap-2">
               <button
                 type="submit"
                 onClick={() => setSubmitMethod('whatsapp')}
-                className="flex-1 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-95 transition-all cursor-pointer"
+                className="flex-1 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs shadow-md flex items-center justify-center gap-1.5 active:scale-95 transition-all cursor-pointer"
               >
-                <span>Send via WhatsApp</span>
-                <ArrowUpRight className="w-4 h-4" />
+                <span>WhatsApp</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
               </button>
 
               <button
                 type="submit"
                 onClick={() => setSubmitMethod('email')}
-                className="flex-1 py-3 rounded-2xl bg-slate-900 dark:bg-white hover:bg-black dark:hover:bg-slate-100 text-white dark:text-slate-900 font-extrabold text-xs shadow-lg flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-95 transition-all cursor-pointer"
+                className="flex-1 py-2.5 rounded-xl bg-slate-900 dark:bg-white hover:bg-black dark:hover:bg-slate-100 text-white dark:text-slate-900 font-extrabold text-xs shadow-md flex items-center justify-center gap-1.5 active:scale-95 transition-all cursor-pointer"
               >
-                <span>Send via Email</span>
-                <ArrowUpRight className="w-4 h-4" />
+                <span>Email</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
               </button>
             </div>
 
             {isSubmitted && (
-              <div className="p-3 rounded-2xl bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 text-xs font-bold text-center animate-fade-in">
+              <div className="p-2 rounded-xl bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 text-xs font-bold text-center animate-fade-in">
                 Redirecting your message now... 🚀
               </div>
             )}
           </form>
 
           {/* Footer note */}
-          <div className="pt-2 border-t border-slate-200/80 dark:border-white/[0.08] flex items-center justify-between text-[11px] font-mono text-slate-400">
-            <div className="flex items-center gap-1.5">
-              <Clock className="w-3.5 h-3.5 text-emerald-500" />
-              <span>Typical reply: &lt; 2 Hours</span>
+          <div className="pt-2 border-t border-slate-200/80 dark:border-white/[0.08] flex items-center justify-between text-[10px] font-mono text-slate-400">
+            <div className="flex items-center gap-1">
+              <Clock className="w-3 h-3 text-emerald-500" />
+              <span>Reply time: &lt; 2 Hours</span>
             </div>
             <button
               type="button"
