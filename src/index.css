@@ -1,0 +1,332 @@
+/* ── Google Font Import (must be first) ──────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   ULTRA GOD MODE DESIGN SYSTEM — Cinematic Holographic Obsidian
+   ============================================================ */
+
+:root {
+  color-scheme: dark;
+  --font-sans: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Dark mode color tokens */
+  --bg-primary: #030712;
+  --bg-secondary: #080d1a;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-glow: rgba(56, 189, 248, 0.35);
+
+  /* Spotlight cursor effect */
+  --spotlight-x: 50%;
+  --spotlight-y: 50%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Animated Holographic Mesh Background ──────────────────── */
+html.dark body {
+  background: #030712;
+  background-image:
+    radial-gradient(ellipse 90% 70% at 15% 10%, rgba(56, 189, 248, 0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 60% at 85% 85%, rgba(168, 85, 247, 0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 50% 40%, rgba(99, 102, 241, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 80% 20%, rgba(16, 185, 129, 0.07) 0%, transparent 50%);
+  background-attachment: fixed;
+}
+
+html:not(.dark) body {
+  background: #f8fafc;
+  background-image:
+    radial-gradient(ellipse 85% 65% at 20% 10%, rgba(14, 165, 233, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 55% at 80% 80%, rgba(139, 92, 246, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 50% 30%, rgba(99, 102, 241, 0.05) 0%, transparent 60%);
+  background-attachment: fixed;
+}
+
+/* ── Custom God-Mode Scrollbar ─────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+
+html.dark ::-webkit-scrollbar-track { background: #030712; }
+html.dark ::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #06b6d4, #3b82f6, #8b5cf6);
+  border-radius: 4px;
+}
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #38bdf8, #60a5fa, #c084fc);
+}
+
+html:not(.dark) ::-webkit-scrollbar-track { background: #f1f5f9; }
+html:not(.dark) ::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #0284c7, #4f46e5);
+  border-radius: 4px;
+}
+
+/* ── Scroll Progress Bar ─────────────────────────────────── */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #06b6d4, #3b82f6, #8b5cf6, #ec4899, #10b981);
+  z-index: 9999;
+  transform-origin: left;
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.9);
+}
+
+/* ── High-Tech Cyber Grid ────────────────────────────────── */
+.bg-grid-pattern {
+  background-size: 50px 50px;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+}
+html:not(.dark) .bg-grid-pattern {
+  background-image:
+    linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+}
+
+/* ── Ambient Radial Glow Orbs ────────────────────────────── */
+.glow-orb-blue {
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.22) 0%, rgba(37, 99, 235, 0.12) 45%, transparent 70%);
+  filter: blur(50px);
+  pointer-events: none;
+}
+.glow-orb-purple {
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.22) 0%, rgba(124, 58, 237, 0.12) 45%, transparent 70%);
+  filter: blur(55px);
+  pointer-events: none;
+}
+.glow-orb-cyan {
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.25) 0%, rgba(14, 165, 233, 0.12) 45%, transparent 70%);
+  filter: blur(45px);
+  pointer-events: none;
+}
+.glow-orb-pink {
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.2) 0%, rgba(219, 39, 119, 0.1) 45%, transparent 70%);
+  filter: blur(45px);
+  pointer-events: none;
+}
+
+/* ── Glassmorphism 3.0 (God-Mode Panels) ─────────────────── */
+.glass-panel {
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+html.dark .glass-panel {
+  background: rgba(11, 17, 33, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 
+    0 20px 40px -15px rgba(0, 0, 0, 0.7),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+html.dark .glass-panel:hover {
+  border-color: rgba(56, 189, 248, 0.35);
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.8),
+    0 0 30px -8px rgba(56, 189, 248, 0.2),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+html:not(.dark) .glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  box-shadow: 
+    0 15px 35px -10px rgba(15, 23, 42, 0.08),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+html:not(.dark) .glass-panel:hover {
+  border-color: rgba(99, 102, 241, 0.35);
+  box-shadow: 
+    0 20px 40px -10px rgba(15, 23, 42, 0.12),
+    0 0 25px -5px rgba(99, 102, 241, 0.15);
+}
+
+/* ── God-Mode Holographic Text Gradient ──────────────────── */
+.text-gradient {
+  background: linear-gradient(135deg, #38bdf8 0%, #818cf8 40%, #c084fc 70%, #34d399 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-cyan {
+  background: linear-gradient(135deg, #22d3ee 0%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-purple {
+  background: linear-gradient(135deg, #c084fc 0%, #ec4899 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Outline Stroke Typography (Editorial Poster Style) ───── */
+.text-stroke-outline {
+  -webkit-text-stroke: 2px currentColor;
+  -webkit-text-fill-color: transparent;
+  color: #38bdf8;
+}
+
+html.dark .text-stroke-outline {
+  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.85);
+  -webkit-text-fill-color: transparent;
+}
+
+html:not(.dark) .text-stroke-outline {
+  -webkit-text-stroke: 2px #0f172a;
+  -webkit-text-fill-color: transparent;
+}
+
+
+.text-gradient-amber {
+  background: linear-gradient(135deg, #fbbf24 0%, #f97316 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Section Label Badges ────────────────────────────────── */
+.section-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+}
+
+html.dark .section-badge {
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: #38bdf8;
+  box-shadow: 0 0 16px -4px rgba(56, 189, 248, 0.3);
+}
+
+html:not(.dark) .section-badge {
+  background: rgba(2, 132, 199, 0.08);
+  border: 1px solid rgba(2, 132, 199, 0.25);
+  color: #0284c7;
+}
+
+/* ── Shimmer & Glowing Buttons ────────────────────────────── */
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shimmer::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 65%
+  );
+  transform: rotate(25deg) translateY(-100%);
+  transition: transform 0.6s ease;
+  pointer-events: none;
+}
+
+.btn-shimmer:hover::after {
+  transform: rotate(25deg) translateY(100%);
+}
+
+/* ── 3D Perspective Tilt Card ────────────────────────────── */
+.tilt-card {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.25s ease;
+}
+
+/* ── Cursor Spotlight Effect ─────────────────────────────── */
+.cursor-spotlight {
+  pointer-events: none;
+  position: fixed;
+  width: 700px;
+  height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.07) 0%, rgba(99, 102, 241, 0.04) 40%, transparent 70%);
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* ── Animations ──────────────────────────────────────────── */
+@keyframes pulseScale {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.08); opacity: 0.9; }
+}
+
+.animate-pulse-scale {
+  animation: pulseScale 4s ease-in-out infinite;
+}
+
+@keyframes floatAnim {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(1deg); }
+}
+
+.animate-float {
+  animation: floatAnim 6s ease-in-out infinite;
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.92) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ── Page Main Scrollbar ─────────────────────────────────── */
+.page-main {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(56, 189, 248, 0.35) transparent;
+  scroll-behavior: smooth;
+}
+
+.page-main::-webkit-scrollbar {
+  width: 6px;
+}
+
+.page-main::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.page-main::-webkit-scrollbar-thumb {
+  background: rgba(56, 189, 248, 0.3);
+  border-radius: 4px;
+}
+
+.page-main::-webkit-scrollbar-thumb:hover {
+  background: rgba(56, 189, 248, 0.6);
+}
