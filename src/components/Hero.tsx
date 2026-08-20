@@ -72,31 +72,27 @@ export const Hero: React.FC<HeroProps> = ({ onOpenHireMe, onOpenResume }) => {
         {/* Ambient Glow Aura */}
         <div className="absolute w-[500px] sm:w-[700px] h-[500px] sm:h-[700px] bg-gradient-to-tr from-cyan-500/15 via-blue-500/10 to-violet-500/15 rounded-full blur-[100px]" />
 
-        {/* ── BASE Portrait: Dark Grayscale (dim so spotlight pops) ── */}
+        {/* ── BASE Portrait: Original natural grayscale (same as before) ── */}
         <img
           src="/profile.jpg"
           alt="Mohammed Saifuddin"
-          className="absolute w-full max-w-2xl sm:max-w-3xl md:max-w-4xl h-full object-cover object-center sm:object-top grayscale brightness-50 contrast-125 opacity-80"
-          style={{ transition: 'opacity 0.3s ease' }}
+          className="absolute w-full max-w-2xl sm:max-w-3xl md:max-w-4xl h-full object-cover object-center sm:object-top filter grayscale contrast-110 opacity-70 dark:opacity-30 mix-blend-multiply dark:mix-blend-screen transition-opacity duration-700"
           onError={(e) => {
             const target = e.target as HTMLImageElement;
             target.src = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop';
           }}
         />
 
-        {/* ── DARK OVERLAY to deepen the base even further ── */}
-        <div className="absolute inset-0 bg-black/30 dark:bg-black/50" />
-
-        {/* ── SPOTLIGHT REVEAL: Vivid full-color portrait clipped to cursor ── */}
+        {/* ── SPOTLIGHT REVEAL: Full-color portrait, clipped to cursor circle ── */}
         <img
           src="/profile.jpg"
           alt="Mohammed Saifuddin Spotlight"
           style={{
             clipPath: isHovering
-              ? `circle(160px at ${mouse.x}px ${mouse.y}px)`
+              ? `circle(150px at ${mouse.x}px ${mouse.y}px)`
               : `circle(0px at ${mouse.x}px ${mouse.y}px)`,
-            transition: 'clip-path 0.12s ease-out',
-            filter: 'brightness(1.25) contrast(1.1) saturate(1.4)',
+            transition: 'clip-path 0.1s ease-out',
+            filter: 'brightness(1.2) contrast(1.1) saturate(1.35)',
           }}
           className="absolute w-full max-w-2xl sm:max-w-3xl md:max-w-4xl h-full object-cover object-center sm:object-top"
           onError={(e) => {
@@ -105,24 +101,24 @@ export const Hero: React.FC<HeroProps> = ({ onOpenHireMe, onOpenResume }) => {
           }}
         />
 
-        {/* ── SPOTLIGHT GLOW RING: strong cyan+violet multi-layer aura ── */}
+        {/* ── SPOTLIGHT GLOW RING ── */}
         {isHovering && (
           <div
             className="absolute pointer-events-none rounded-full"
             style={{
-              width: 320,
-              height: 320,
-              left: mouse.x - 160,
-              top: mouse.y - 160,
-              border: '2px solid rgba(6,182,212,0.9)',
+              width: 300,
+              height: 300,
+              left: mouse.x - 150,
+              top: mouse.y - 150,
+              border: '2px solid rgba(6,182,212,0.85)',
               boxShadow: [
-                '0 0 0 1px rgba(139,92,246,0.5)',
-                '0 0 25px 8px rgba(6,182,212,0.6)',
-                '0 0 60px 20px rgba(6,182,212,0.25)',
-                '0 0 100px 40px rgba(139,92,246,0.15)',
-                'inset 0 0 40px 10px rgba(6,182,212,0.12)',
+                '0 0 0 1px rgba(139,92,246,0.45)',
+                '0 0 20px 6px rgba(6,182,212,0.55)',
+                '0 0 50px 16px rgba(6,182,212,0.22)',
+                '0 0 90px 35px rgba(139,92,246,0.12)',
+                'inset 0 0 30px 8px rgba(6,182,212,0.10)',
               ].join(', '),
-              transition: 'left 0.05s linear, top 0.05s linear',
+              transition: 'left 0.04s linear, top 0.04s linear',
             }}
           />
         )}
@@ -131,6 +127,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenHireMe, onOpenResume }) => {
         <div className="absolute inset-0 bg-gradient-to-t from-[#f8fafc] via-transparent to-[#f8fafc]/90 dark:from-[#030712] dark:via-transparent dark:to-[#030712]/90" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#f8fafc] via-transparent to-[#f8fafc] dark:from-[#030712] dark:via-transparent dark:to-[#030712]" />
       </div>
+
 
       {/* ── Main Foreground Content ─────────────────────────────────── */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex-1 flex flex-col justify-between relative z-10">
