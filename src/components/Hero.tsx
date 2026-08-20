@@ -72,44 +72,57 @@ export const Hero: React.FC<HeroProps> = ({ onOpenHireMe, onOpenResume }) => {
         {/* Ambient Glow Aura */}
         <div className="absolute w-[500px] sm:w-[700px] h-[500px] sm:h-[700px] bg-gradient-to-tr from-cyan-500/15 via-blue-500/10 to-violet-500/15 rounded-full blur-[100px]" />
 
-        {/* ── BASE Portrait: Grayscale + Dim (always visible) ── */}
+        {/* ── BASE Portrait: Dark Grayscale (dim so spotlight pops) ── */}
         <img
           src="/profile.jpg"
           alt="Mohammed Saifuddin"
-          className="absolute w-full max-w-2xl sm:max-w-3xl md:max-w-4xl h-full object-cover object-center sm:object-top filter grayscale contrast-110 opacity-70 dark:opacity-30 mix-blend-multiply dark:mix-blend-screen transition-all duration-300"
+          className="absolute w-full max-w-2xl sm:max-w-3xl md:max-w-4xl h-full object-cover object-center sm:object-top grayscale brightness-50 contrast-125 opacity-80"
+          style={{ transition: 'opacity 0.3s ease' }}
           onError={(e) => {
             const target = e.target as HTMLImageElement;
             target.src = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop';
           }}
         />
 
-        {/* ── SPOTLIGHT REVEAL: Full-color portrait clipped to cursor circle ── */}
+        {/* ── DARK OVERLAY to deepen the base even further ── */}
+        <div className="absolute inset-0 bg-black/30 dark:bg-black/50" />
+
+        {/* ── SPOTLIGHT REVEAL: Vivid full-color portrait clipped to cursor ── */}
         <img
           src="/profile.jpg"
-          alt="Mohammed Saifuddin Full Color"
+          alt="Mohammed Saifuddin Spotlight"
           style={{
             clipPath: isHovering
-              ? `circle(140px at ${mouse.x}px ${mouse.y}px)`
+              ? `circle(160px at ${mouse.x}px ${mouse.y}px)`
               : `circle(0px at ${mouse.x}px ${mouse.y}px)`,
-            transition: 'clip-path 0.15s ease-out',
+            transition: 'clip-path 0.12s ease-out',
+            filter: 'brightness(1.25) contrast(1.1) saturate(1.4)',
           }}
-          className="absolute w-full max-w-2xl sm:max-w-3xl md:max-w-4xl h-full object-cover object-center sm:object-top brightness-110 contrast-105 saturate-110 opacity-90 dark:opacity-60 mix-blend-normal dark:mix-blend-screen"
+          className="absolute w-full max-w-2xl sm:max-w-3xl md:max-w-4xl h-full object-cover object-center sm:object-top"
           onError={(e) => {
             const target = e.target as HTMLImageElement;
             target.src = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop';
           }}
         />
 
-        {/* ── SPOTLIGHT GLOW RING: cyan aura ring around cursor ── */}
+        {/* ── SPOTLIGHT GLOW RING: strong cyan+violet multi-layer aura ── */}
         {isHovering && (
           <div
-            className="absolute pointer-events-none rounded-full border-2 border-cyan-400/60 dark:border-cyan-400/80 shadow-[0_0_40px_10px_rgba(6,182,212,0.25)] transition-all duration-150"
+            className="absolute pointer-events-none rounded-full"
             style={{
-              width: 280,
-              height: 280,
-              left: mouse.x - 140,
-              top: mouse.y - 140,
-              boxShadow: '0 0 0 2px rgba(6,182,212,0.3), 0 0 40px 12px rgba(6,182,212,0.18), inset 0 0 30px rgba(6,182,212,0.08)',
+              width: 320,
+              height: 320,
+              left: mouse.x - 160,
+              top: mouse.y - 160,
+              border: '2px solid rgba(6,182,212,0.9)',
+              boxShadow: [
+                '0 0 0 1px rgba(139,92,246,0.5)',
+                '0 0 25px 8px rgba(6,182,212,0.6)',
+                '0 0 60px 20px rgba(6,182,212,0.25)',
+                '0 0 100px 40px rgba(139,92,246,0.15)',
+                'inset 0 0 40px 10px rgba(6,182,212,0.12)',
+              ].join(', '),
+              transition: 'left 0.05s linear, top 0.05s linear',
             }}
           />
         )}
