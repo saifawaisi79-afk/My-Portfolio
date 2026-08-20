@@ -101,29 +101,9 @@ export const Hero: React.FC<HeroProps> = ({ onOpenHireMe, onOpenResume }) => {
           }}
         />
 
-        {/* ── SPOTLIGHT GLOW RING ── */}
-        {isHovering && (
-          <div
-            className="absolute pointer-events-none rounded-full"
-            style={{
-              width: 300,
-              height: 300,
-              left: mouse.x - 150,
-              top: mouse.y - 150,
-              border: '2px solid rgba(6,182,212,0.85)',
-              boxShadow: [
-                '0 0 0 1px rgba(139,92,246,0.45)',
-                '0 0 20px 6px rgba(6,182,212,0.55)',
-                '0 0 50px 16px rgba(6,182,212,0.22)',
-                '0 0 90px 35px rgba(139,92,246,0.12)',
-                'inset 0 0 30px 8px rgba(6,182,212,0.10)',
-              ].join(', '),
-              transition: 'left 0.04s linear, top 0.04s linear',
-            }}
-          />
-        )}
 
         {/* Gradient Scrims */}
+
         <div className="absolute inset-0 bg-gradient-to-t from-[#f8fafc] via-transparent to-[#f8fafc]/90 dark:from-[#030712] dark:via-transparent dark:to-[#030712]/90" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#f8fafc] via-transparent to-[#f8fafc] dark:from-[#030712] dark:via-transparent dark:to-[#030712]" />
       </div>
