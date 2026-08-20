@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import {
   ArrowUpRight,
   Download,
@@ -32,6 +32,9 @@ interface HeroProps {
 
 export const Hero: React.FC<HeroProps> = ({ onOpenHireMe, onOpenResume }) => {
   const [copiedPhone, setCopiedPhone] = useState(false);
+  const [mouse, setMouse] = useState({ x: -999, y: -999 });
+  const [isHovering, setIsHovering] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
 
   const copyPhone = () => {
     navigator.clipboard.writeText(personalInfo.phone);
@@ -39,29 +42,79 @@ export const Hero: React.FC<HeroProps> = ({ onOpenHireMe, onOpenResume }) => {
     setTimeout(() => setCopiedPhone(false), 2000);
   };
 
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
+    if (!sectionRef.current) return;
+    const rect = sectionRef.current.getBoundingClientRect();
+    setMouse({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  }, []);
+
+  const handleMouseEnter = () => setIsHovering(true);
+  const handleMouseLeave = () => {
+    setIsHovering(false);
+    setMouse({ x: -999, y: -999 });
+  };
+
   return (
     <section
       id="home"
+      ref={sectionRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       className="relative min-h-[calc(100vh-80px)] flex flex-col justify-between pt-4 pb-6 sm:py-8 overflow-hidden select-none"
     >
-      {/* ── ENTIRE PORTRAIT IMAGE IN THE BACKGROUND ─────────────────── */}
+      {/* ── BACKGROUND PORTRAIT LAYER ─────────────────────────────────── */}
       <div className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none overflow-hidden z-0">
         
-        {/* Ambient Glow Aura behind Portrait */}
+        {/* Ambient Glow Aura */}
         <div className="absolute w-[500px] sm:w-[700px] h-[500px] sm:h-[700px] bg-gradient-to-tr from-cyan-500/15 via-blue-500/10 to-violet-500/15 rounded-full blur-[100px]" />
 
-        {/* Full-Bleed Portrait Background Image */}
+        {/* ── BASE Portrait: Grayscale + Dim (always visible) ── */}
         <img
           src="/profile.jpg"
-          alt="Mohammed Saifuddin Background"
-          className="w-full max-w-2xl sm:max-w-3xl md:max-w-4xl h-full object-cover object-center sm:object-top filter grayscale contrast-110 opacity-70 dark:opacity-30 mix-blend-multiply dark:mix-blend-screen transition-opacity duration-700"
+          alt="Mohammed Saifuddin"
+          className="absolute w-full max-w-2xl sm:max-w-3xl md:max-w-4xl h-full object-cover object-center sm:object-top filter grayscale contrast-110 opacity-70 dark:opacity-30 mix-blend-multiply dark:mix-blend-screen transition-all duration-300"
           onError={(e) => {
             const target = e.target as HTMLImageElement;
             target.src = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop';
           }}
         />
 
-        {/* Gradient Scrims to smoothly blend the image into the page borders */}
+        {/* ── SPOTLIGHT REVEAL: Full-color portrait clipped to cursor circle ── */}
+        <img
+          src="/profile.jpg"
+          alt="Mohammed Saifuddin Full Color"
+          style={{
+            clipPath: isHovering
+              ? `circle(140px at ${mouse.x}px ${mouse.y}px)`
+              : `circle(0px at ${mouse.x}px ${mouse.y}px)`,
+            transition: 'clip-path 0.15s ease-out',
+          }}
+          className="absolute w-full max-w-2xl sm:max-w-3xl md:max-w-4xl h-full object-cover object-center sm:object-top brightness-110 contrast-105 saturate-110 opacity-90 dark:opacity-60 mix-blend-normal dark:mix-blend-screen"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop';
+          }}
+        />
+
+        {/* ── SPOTLIGHT GLOW RING: cyan aura ring around cursor ── */}
+        {isHovering && (
+          <div
+            className="absolute pointer-events-none rounded-full border-2 border-cyan-400/60 dark:border-cyan-400/80 shadow-[0_0_40px_10px_rgba(6,182,212,0.25)] transition-all duration-150"
+            style={{
+              width: 280,
+              height: 280,
+              left: mouse.x - 140,
+              top: mouse.y - 140,
+              boxShadow: '0 0 0 2px rgba(6,182,212,0.3), 0 0 40px 12px rgba(6,182,212,0.18), inset 0 0 30px rgba(6,182,212,0.08)',
+            }}
+          />
+        )}
+
+        {/* Gradient Scrims */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#f8fafc] via-transparent to-[#f8fafc]/90 dark:from-[#030712] dark:via-transparent dark:to-[#030712]/90" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#f8fafc] via-transparent to-[#f8fafc] dark:from-[#030712] dark:via-transparent dark:to-[#030712]" />
       </div>
@@ -69,10 +122,10 @@ export const Hero: React.FC<HeroProps> = ({ onOpenHireMe, onOpenResume }) => {
       {/* ── Main Foreground Content ─────────────────────────────────── */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex-1 flex flex-col justify-between relative z-10">
 
-        {/* ── Center Editorial Canvas (Big Typography + Floating Details) ── */}
+        {/* ── Center Editorial Canvas ── */}
         <div className="relative my-auto py-8 sm:py-16 flex flex-col items-center justify-center min-h-[460px] sm:min-h-[540px]">
 
-          {/* ── Giant Editorial Name Typography ─────────────────────── */}
+          {/* ── Giant Editorial Name Typography ── */}
           <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none select-none z-0 overflow-hidden w-full">
             <div className="flex items-center justify-center gap-3 sm:gap-8 whitespace-nowrap text-center">
               <span className="text-stroke-outline font-black tracking-tighter text-6xl sm:text-8xl md:text-9xl lg:text-[145px] xl:text-[175px] leading-none uppercase drop-shadow-sm">
@@ -84,7 +137,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenHireMe, onOpenResume }) => {
             </div>
           </div>
 
-          {/* ── Left Column Info (Dymas Alfin layout) ──────────────── */}
+          {/* ── Left Column Info ── */}
           <div className="w-full lg:w-auto lg:absolute lg:left-0 lg:bottom-4 z-20 mt-6 lg:mt-0 text-left space-y-3 max-w-xs">
             <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight leading-snug">
               Senior Full-Stack <br />Developer & Architect
@@ -103,10 +156,9 @@ export const Hero: React.FC<HeroProps> = ({ onOpenHireMe, onOpenResume }) => {
             </div>
           </div>
 
-          {/* ── Right Column Social Pills (Dymas Alfin layout) ──────── */}
+          {/* ── Right Column Social Pills ── */}
           <div className="w-full lg:w-auto lg:absolute lg:right-0 lg:bottom-4 z-20 mt-4 lg:mt-0 flex flex-wrap lg:flex-col items-start lg:items-end gap-2.5 pointer-events-auto">
             
-            {/* LinkedIn Pill */}
             <a
               href={personalInfo.linkedin}
               target="_blank"
@@ -118,7 +170,6 @@ export const Hero: React.FC<HeroProps> = ({ onOpenHireMe, onOpenResume }) => {
               <ArrowUpRight className="w-3 h-3 text-slate-400 group-hover:translate-x-0.5 transition-transform" />
             </a>
 
-            {/* GitHub Pill */}
             <a
               href={personalInfo.github}
               target="_blank"
@@ -130,7 +181,6 @@ export const Hero: React.FC<HeroProps> = ({ onOpenHireMe, onOpenResume }) => {
               <ArrowUpRight className="w-3 h-3 text-slate-400 group-hover:translate-x-0.5 transition-transform" />
             </a>
 
-            {/* WhatsApp Pill */}
             <a
               href={`https://wa.me/${personalInfo.rawPhone}?text=Hello%20Saifuddin,%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20connect!`}
               target="_blank"
@@ -142,7 +192,6 @@ export const Hero: React.FC<HeroProps> = ({ onOpenHireMe, onOpenResume }) => {
               <ArrowUpRight className="w-3 h-3 text-slate-400 group-hover:translate-x-0.5 transition-transform" />
             </a>
 
-            {/* Resume Button Pill */}
             <button
               onClick={onOpenResume}
               className="px-4 py-2 rounded-2xl glass-panel hover:border-cyan-500/50 text-slate-700 dark:text-slate-200 hover:text-cyan-600 dark:hover:text-cyan-400 text-xs font-bold flex items-center gap-2 shadow-sm transition-all duration-200 hover:scale-105 group cursor-pointer"
@@ -155,7 +204,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenHireMe, onOpenResume }) => {
 
         </div>
 
-        {/* ── Bottom Tech Ticker Bar ───────────────────────────────── */}
+        {/* ── Bottom Tech Ticker Bar ── */}
         <div className="pt-3 border-t border-slate-200/80 dark:border-white/[0.08] flex flex-wrap items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400 font-mono">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-cyan-400" />
