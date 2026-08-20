@@ -107,13 +107,14 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
               <span>|</span>
               <a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:text-blue-600">
                 <LinkedInIcon className="w-3 h-3 text-slate-500" />
-                <span>linkedin.com/in/md-saif-uddin-/</span>
+                <span>linkedin.com/{personalInfo.linkedinHandle}</span>
               </a>
               <span>|</span>
               <a href={personalInfo.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:text-blue-600">
                 <GitHubIcon className="w-3 h-3 text-slate-500" />
-                <span>github.com/saifawaisi79-afkadd</span>
+                <span>github.com/{personalInfo.githubHandle}</span>
               </a>
+
             </div>
           </div>
 

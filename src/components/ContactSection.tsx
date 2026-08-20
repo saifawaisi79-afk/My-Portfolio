@@ -202,7 +202,7 @@ export const ContactSection: React.FC = () => {
             >
               <div className="text-left truncate pr-2">
                 <p className="font-bold">LinkedIn Profile</p>
-                <p className="text-[10px] opacity-70 font-mono">md-saif-uddin-</p>
+                <p className="text-[10px] opacity-70 font-mono">{personalInfo.linkedinHandle}</p>
               </div>
               <ArrowUpRight className="w-4 h-4 shrink-0 opacity-70" />
             </a>
@@ -215,10 +215,11 @@ export const ContactSection: React.FC = () => {
             >
               <div className="text-left truncate pr-2">
                 <p className="font-bold">GitHub Code</p>
-                <p className="text-[10px] opacity-70 font-mono">saifawaisi79-afkadd</p>
+                <p className="text-[10px] opacity-70 font-mono">{personalInfo.githubHandle}</p>
               </div>
               <ArrowUpRight className="w-4 h-4 shrink-0 opacity-70" />
             </a>
+
           </div>
 
         </div>

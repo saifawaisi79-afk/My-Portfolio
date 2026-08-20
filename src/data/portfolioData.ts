@@ -9,10 +9,11 @@ export const personalInfo = {
   phone: '+91 8618842547',
   rawPhone: '918618842547',
   email: 'saifawaisi79@gmail.com',
-  linkedin: 'https://www.linkedin.com/in/md-saif-uddin-/',
-  linkedinHandle: 'in/md-saif-uddin-/',
-  github: 'https://github.com/saifawaisi79-afkadd',
-  githubHandle: 'saifawaisi79-afkadd',
+  linkedin: 'https://www.linkedin.com/in/md-saif-uddin-1792a4225?utm_source=share_via&utm_content=profile&utm_medium=member_android',
+  linkedinHandle: 'in/md-saif-uddin-1792a4225',
+  github: 'https://github.com/saifawaisi79-afk',
+  githubHandle: 'saifawaisi79-afk',
+
   education: {
     institution: 'Visvesvaraya Technological University (VTU)',
     degree: 'Bachelor of Engineering – Computer Science & Engineering',
